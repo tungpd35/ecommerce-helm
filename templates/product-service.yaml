@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.productService.name }}
+  labels:
+    app: {{ .Release.Namespace }}
+    module: {{ .Values.productService.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Namespace }}
+      module: {{ .Values.productService.name }}
+  replicas: {{ .Values.productService.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Namespace }}
+        module: {{ .Values.productService.name }}
+    spec:
+      containers:
+        - image: "{{ .Values.image.repository }}/{{ .Values.productService.name }}:{{ .Values.productService.tag | default .Chart.AppVersion }}"
+          name: product-service
+          imagePullPolicy: {{ .Values.image.pullPolicy}}
+          env:
+            - name: JAVA_OPTS
+              value: {{ .Values.productService.JAVA_OPTS }}  # Giới hạn dung lượng heap tối đa của JVM và sử dụng Garbage Collector
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.productService.SPRING_PROFILES_ACTIVE }}
+          resources:
+            {{- toYaml .Values.productService.resources | nindent 10 }}
+          ports:
+            - containerPort: 9999
+            - containerPort: 6969
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 6969
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            periodSeconds: 180
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 6969
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            periodSeconds: 120
+      imagePullSecrets:
+        - name: harbor
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.productService.name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Namespace }}
+    module: {{ .Values.productService.name }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Release.Namespace }}
+    module: {{ .Values.productService.name }}
+  ports:
+    - name: product-service-port
+      protocol: TCP
+      port: 9999
+      targetPort: 9999
