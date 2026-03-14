@@ -11,6 +11,13 @@ image:
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
 
+imagePullSecret:
+  enabled: true
+  registry: harbor.tungpd.online
+  username: admin
+  password: Attt@123
+  email: tungpd@gmail.com
+
 productService:
   name: product-service
   tag: v1
