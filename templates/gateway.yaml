@@ -28,7 +28,7 @@ spec:
     - name: {{ .Values.userService.name }}
       match:
         - uri:
-            prefix: /user/
+            prefix: /api/user/
       route:
         - destination:
             host: {{ .Values.userService.name }}
@@ -37,7 +37,7 @@ spec:
     - name: {{ .Values.productService.name }}
       match:
         - uri:
-            prefix: /product/
+            prefix: /api/product/
       route:
         - destination:
             host: {{ .Values.productService.name }}
