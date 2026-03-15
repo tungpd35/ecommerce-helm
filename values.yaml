@@ -9,7 +9,7 @@ replicaCount: 1
 image:
   repository: harbor.tungpd.online/ecommerce
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 imagePullSecret:
   enabled: true
