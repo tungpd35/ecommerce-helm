@@ -25,15 +25,6 @@ spec:
   gateways:
     - {{ .Release.Namespace }}-gateway
   http:
-    - name: {{ .Values.webapp.name }}
-      match:
-        - uri:
-            prefix: /
-      route:
-        - destination:
-            host: {{ .Values.webapp.name }}
-            port:
-              number: 80
     - name: {{ .Values.userService.name }}
       match:
         - uri:
@@ -52,3 +43,12 @@ spec:
             host: {{ .Values.productService.name }}
             port:
               number: 9999
+    - name: {{ .Values.webapp.name }}
+      match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: {{ .Values.webapp.name }}
+            port:
+              number: 80
