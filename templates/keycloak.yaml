@@ -34,6 +34,10 @@ spec:
               value: {{ .Values.keycloak.env.KC_DB_USERNAME }}
             - name: KC_DB_PASSWORD
               value: {{ .Values.keycloak.env.KC_DB_PASSWORD }}
+            - name: KEYCLOAK_ADMIN
+              value: {{ .Values.keycloak.env.KEYCLOAK_ADMIN }}
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: {{ .Values.keycloak.env.KEYCLOAK_ADMIN_PASSWORD }}
           ports:
             - name: http
               containerPort: 8080
