@@ -34,10 +34,22 @@ productService:
 
 
 userService:
-  name: order-service
+  name: user-service
   tag: v1
   JAVA_OPTS: -Xmx250m -XX:+UseG1GC
   SPRING_PROFILES_ACTIVE: k8s
+  replicas: 1
+  resources:
+    requests:
+      cpu: "10m"
+      memory: "125Mi"
+    limits:
+      cpu: "250m"
+      memory: "1Gi"
+
+webapp:
+  name: webapp
+  tag: v1
   replicas: 1
   resources:
     requests:
