@@ -24,6 +24,8 @@ spec:
           env:
             - name: JAVA_OPTS
               value: {{ .Values.keycloak.env.JAVA_OPTS }}
+            - name: KC_DB
+              value: {{ .Values.keycloak.env.KC_DB }}
             - name: KC_DB_URL
               value: {{ .Values.keycloak.env.KC_DB_URL }}
             - name: KC_DB_USERNAME
