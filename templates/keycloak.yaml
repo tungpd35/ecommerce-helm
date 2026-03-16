@@ -24,20 +24,10 @@ spec:
             - start-dev
             - --import-realm
           env:
-            - name: JAVA_OPTS
-              value: {{ .Values.keycloak.env.JAVA_OPTS }}
-            - name: KC_DB
-              value: {{ .Values.keycloak.env.KC_DB }}
-            - name: KC_DB_URL
-              value: {{ .Values.keycloak.env.KC_DB_URL }}
-            - name: KC_DB_USERNAME
-              value: {{ .Values.keycloak.env.KC_DB_USERNAME }}
-            - name: KC_DB_PASSWORD
-              value: {{ .Values.keycloak.env.KC_DB_PASSWORD }}
-            - name: KEYCLOAK_ADMIN
-              value: {{ .Values.keycloak.env.KEYCLOAK_ADMIN }}
-            - name: KEYCLOAK_ADMIN_PASSWORD
-              value: {{ .Values.keycloak.env.KEYCLOAK_ADMIN_PASSWORD }}
+            {{ range .Values.keycloak.env }}
+            - name: {{ .name}}
+              value: {{ .value}}
+            {{ end }}
           ports:
             - name: http
               containerPort: 8080
