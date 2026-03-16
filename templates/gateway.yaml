@@ -43,6 +43,15 @@ spec:
             host: {{ .Values.productService.name }}
             port:
               number: 9999
+    - name: {{ .Values.cartService.name }}
+      match:
+        - uri:
+            prefix: /api/shopping-cart
+      route:
+        - destination:
+            host: {{ .Values.cartService.name }}
+            port:
+              number: 9999
     - name: {{ .Values.webapp.name }}
       match:
         - uri:

@@ -32,6 +32,19 @@ productService:
       cpu: "250m"
       memory: "1Gi"
 
+cartService:
+  name: cart-service
+  tag: v1
+  JAVA_OPTS: -Xmx250m -XX:+UseG1GC
+  SPRING_PROFILES_ACTIVE: k8s
+  replicas: 1
+  resources:
+    requests:
+      cpu: "10m"
+      memory: "125Mi"
+    limits:
+      cpu: "250m"
+      memory: "1Gi"
 
 userService:
   name: user-service
