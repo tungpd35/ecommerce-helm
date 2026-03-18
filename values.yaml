@@ -11,6 +11,9 @@ image:
   # This sets the pull policy for images.
   pullPolicy: Always
 
+authorizationPolicies:
+  create: true
+
 imagePullSecret:
   enabled: true
   registry: harbor.tungpd.online

@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - image: "{{ .Values.image.repository }}/{{ .Values.productService.name }}:{{ .Values.productService.tag | default .Chart.AppVersion }}"
-          name: product-service
+          name: {{ .Values.productService.name }}
           imagePullPolicy: {{ .Values.image.pullPolicy}}
           env:
             - name: JAVA_OPTS
@@ -63,7 +63,7 @@ spec:
     app: {{ .Release.Namespace }}
     module: {{ .Values.productService.name }}
   ports:
-    - name: product-service-port
+    - name: {{ .Values.productService.name }}-port
       protocol: TCP
       port: 9999
       targetPort: 9999

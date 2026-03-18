@@ -52,3 +52,26 @@ spec:
       protocol: TCP
       port: 9999
       targetPort: 9999
+{{- if .Values.authorizationPolicies.create }}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ .Values.productService.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.productService.name }}
+  rules:
+    - from:
+        - source:
+            namespaces:
+              - {{ .Release.Namespace }}
+      to:
+        - operation:
+            paths:
+              - /api/shopping-cart/*
+            methods:
+              - POST
+{{- end }}
