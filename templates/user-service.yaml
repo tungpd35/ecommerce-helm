@@ -65,10 +65,10 @@ spec:
       app: {{ .Release.Namespace }}
       module: {{ .Values.userService.name }}
   rules:
-{{/*    - from:*/}}
-{{/*        - source:*/}}
-{{/*            namespaces:*/}}
-{{/*              - {{ .Release.Namespace }}*/}}
+    - from:
+        - source:
+            principals:
+              - cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account
       to:
         - operation:
             paths:
