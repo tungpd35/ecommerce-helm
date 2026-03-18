@@ -62,7 +62,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.userService.name }}
+      app: {{ .Release.Namespace }}
+      module: {{ .Values.userService.name }}
   rules:
     - from:
         - source:
